@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <div class="container mt-4 p-5 shadow rounded-3">
+        <!-- Button trigger modal -->
+        <button type="button" id="add" class="btn btn-outline-dark float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            +Add Pet
+        </button>
+        <table class="table table-hover text-center">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="body">
+
+            </tbody>
+        </table>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" id="form">
+                            <div class="mb-2">
+                                <label for="" class="form-label">Name</label>
+                                <input type="text"  id="name" class="form-control" placeholder="Name...">
+                            </div>
+                            <div class="mb-2">
+                                <label for="" class="form-label">Gender</label>
+                                <select name="" class="form-select" id="gender">
+                                    <option value="" disabled selected>---other---</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                             <div class="mb-2">
+                                <label for="" class="form-label">Age</label>
+                                <input type="number"  id="age" class="form-control" placeholder="Age...">
+                            </div>
+                             <div class="mb-2">
+                                <label for="" class="form-label">Image</label>
+                                <input type="file"  id="image" class="form-control">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="save" class="btn btn-primary">Save</button>
+                        <button type="button" id="update" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: 'http://127.0.0.1:8000/api/pet',
+            success: function (data) {
+                console.log(data);
+                data.data.map((value) => {
+                    $('#body').append(`
+                        <tr>
+                            <td>${value.id}</td>
+                            <td>${value.name}</td>
+                            <td>${value.gender}</td>
+                            <td>${value.age}</td>
+                            <td>
+                                <img src="${value.image}" width="40px" heigh="40px" alt="">
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-danger delete">Delete</button>
+                                <button class="btn btn-outline-warning edit" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+                            </td>
+                        </tr>
+                    `)
+                })
+
+            }
+        })
+        $(document).on('click', '.delete', function () {
+            if (!confirm("Are you sure?")) return
+            const row = $(this).closest('tr')
+            const id = row.find('td:first').text().trim()
+            $.ajax({
+                url: `http://127.0.0.1:8000/api/delete/${id}`,
+                method: 'DELETE',
+                success: function () {
+                    location.reload()
+                }
+            })
+        })
+        $('#save').click(function(){
+            const name=$('#name').val()
+            const gender=$('#gender').val()
+            const age=$('#age').val()
+            const image=$('#image')[0].files[0]
+            
+            let formdata= new FormData()
+            formdata.append('name',name)
+            formdata.append('gender',gender)
+            formdata.append('age',age)
+            formdata.append('image',image)
+            $.ajax({
+                url:'http://127.0.0.1:8000/api/insert',
+                method:'POST',
+                data:formdata,
+                contentType:false,
+                processData:false,
+                success:function(){
+                    location.reload()
+                }
+            })
+        })
+        $('#add').click(function(){
+            $('#exampleModalLabel').text('Add Pet')
+            $('#save').show()
+            $('#update').hide()
+            $('#form').trigger('reset')
+        })
+        $(document).on('click','.edit',function(){
+            $('#exampleModalLabel').text('Update Pet')
+            $('#save').hide()
+            $('#update').show()
+            const row=$(this).closest('tr')
+            const id=row.find('td:eq(0)').text().trim()
+            const name=row.find('td:eq(1)').text().trim()
+            const gender=row.find('td:eq(2)').text().trim()
+            const age=row.find('td:eq(3)').text().trim()
+            $('#name').val(name)
+            $('#gender').val(gender)
+            $('#age').val(age)
+            $('#update').click(function(){
+                const name=$('#name').val()
+                const gender=$('#gender').val()
+                const age=$('#age').val()
+                const image=$('#image')[0].files[0]
+                
+                let formdata= new FormData()
+                formdata.append('name',name)
+                formdata.append('gender',gender)
+                formdata.append('age',age)
+                formdata.append('image',image)
+                $.ajax({
+                    url:`http://127.0.0.1:8000/api/update/${id}`,
+                    method:'POST',
+                    data:formdata,
+                    contentType:false,
+                    processData:false,
+                    success:function(){
+                        location.reload()
+                    }
+                })
+            })
+        })
+    })
+</script>
