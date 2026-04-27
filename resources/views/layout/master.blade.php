@@ -6,6 +6,7 @@
     <title>@yield('title', 'Threadline Studio')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -369,9 +370,14 @@
 
             <div class="nav-actions">
                 <a class="icon-button" href="#" aria-label="Search">&#8981;</a>
-                
-                <a class="button" href="{{ url('/login') }}">Login</a>
-                <a class="button" href="{{ url('/register') }}">Register</a>
+                @if (Auth::check())
+                    <a class="button" href="#">Logout</a>
+                    
+                @else
+                    
+                    <a class="button" href="{{ url('/login') }}">Login</a>
+                    <a class="button" href="{{ url('/register') }}">Register</a>
+                @endif
             </div>
         </nav>
     </header>
