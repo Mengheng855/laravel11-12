@@ -39,6 +39,7 @@ Route::prefix('/admin')->group(function(){
             Route::get('/category','category');
             Route::get('/category/add','addCategory');
             Route::get('/category/edit','editCategory');
+            Route::post('/category/createCategory','createCategory')->name('createCategory');
         });
     });
 });

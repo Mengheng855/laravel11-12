@@ -48,28 +48,26 @@
                                 <th>ID</th>
                                 <th>Image</th>
                                 <th>Category Name</th>
+                                <th>Created by</th>
+                                <th>Created at</th>
+                                <th>Updated at</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>CAT-001</td>
-                                <td><img class="table-thumb" src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=120&q=80" alt="Dresses category"></td>
-                                <td>Dresses</td>
-                                <td><span class="table-actions"><a class="icon-action edit-icon" href="{{ url('/admin/category/edit') }}" aria-label="Update Dresses">&#9998;</a><button class="icon-action" type="button" aria-label="More actions">&#8942;</button></span></td>
-                            </tr>
-                            <tr>
-                                <td>CAT-002</td>
-                                <td><img class="table-thumb" src="https://images.unsplash.com/photo-1543076447-215ad9ba6923?auto=format&fit=crop&w=120&q=80" alt="Streetwear category"></td>
-                                <td>Streetwear</td>
-                                <td><span class="table-actions"><a class="icon-action edit-icon" href="{{ url('/admin/category/edit') }}" aria-label="Update Streetwear">&#9998;</a><button class="icon-action" type="button" aria-label="More actions">&#8942;</button></span></td>
-                            </tr>
-                            <tr>
-                                <td>CAT-003</td>
-                                <td><img class="table-thumb" src="https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=120&q=80" alt="Essentials category"></td>
-                                <td>Essentials</td>
-                                <td><span class="table-actions"><a class="icon-action edit-icon" href="{{ url('/admin/category/edit') }}" aria-label="Update Essentials">&#9998;</a><button class="icon-action" type="button" aria-label="More actions">&#8942;</button></span></td>
-                            </tr>
+                            @foreach ($data as $d)
+                                <tr>
+                                    <td>{{ $d['id'] }}</td>
+                                    <td>
+                                        <img src="{{ $d['image'] }}" width="40px" alt="">
+                                    </td>
+                                    <td>{{ $d['cate_name'] }}</td>
+                                    <td>{{ $d->user->name }}</td>
+                                    <td>{{ $d['created_at'] }}</td>
+                                    <td>{{ $d['updated_at'] }}</td>
+                                    <td><span class="table-actions"><a class="icon-action edit-icon" href="{{ url('/admin/product/edit') }}" aria-label="Update Denim Work Jacket">&#9998;</a><button class="icon-action" type="button" aria-label="More actions">&#8942;</button></span></td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
