@@ -19,6 +19,7 @@ class CategoryController extends Controller
         return view('admin.editCategory');
     }
     public function createCategory(Request $req){
+        
         $data=$req->validate([
             'cate_name'=>'required'
         ]);
