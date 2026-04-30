@@ -33,13 +33,18 @@ Route::prefix('/admin')->group(function(){
         Route::controller(ProductController::class)->group(function(){
             Route::get('/product','product');
             Route::get('/product/add','addProduct');
-            Route::get('/product/edit','editProduct');
+            Route::get('/product/{id}/edit','editProduct');
+            Route::post('/product/create','createProduct')->name('createProduct');
+            Route::post('/product/{id}/updateProduct','updateProduct');
+            Route::get('/product/{id}/deleteProduct','deleteProduct');
         });
         Route::controller(CategoryController::class)->group(function(){
             Route::get('/category','category');
             Route::get('/category/add','addCategory');
-            Route::get('/category/edit','editCategory');
+            Route::get('/category/{id}/edit','editCategory');
             Route::post('/category/createCategory','createCategory')->name('createCategory');
+            Route::post('/category/{id}/updateCategory','updateCategory');
+            Route::get('/category/{id}/delete','deleteCategory');
         });
     });
 });

@@ -87,30 +87,32 @@
                     </div>
                 </div>
 
-                <form class="admin-form" id="edit-product-form">
+                <form action="{{ url('/admin/product/'.$data['id'].'/updateProduct') }}" method="post" enctype="multipart/form-data" class="admin-form" id="edit-product-form">
+                    @csrf    
                     <div class="form-grid">
                         <div class="form-field full">
                             <label for="product-name">Product Name</label>
-                            <input id="product-name" name="name" type="text" value="Denim Work Jacket">
+                            <input id="product-name" name="pro_name" type="text" value="{{ $data['pro_name'] }}">
                         </div>
 
                         <div class="form-field">
                             <label for="product-price">Price</label>
-                            <input id="product-price" name="price" type="number" value="118">
+                            <input id="product-price" name="price" type="number" value="{{ $data['price'] }}">
                         </div>
 
                         <div class="form-field">
                             <label for="product-qty">Qty</label>
-                            <input id="product-qty" name="qty" type="number" value="84">
+                            <input id="product-qty" name="stock" type="number" value="{{ $data['stock'] }}">
                         </div>
 
                         <div class="form-field">
                             <label for="product-category">Category</label>
-                            <select id="product-category" name="category">
-                                <option>Outerwear</option>
-                                <option>Dresses</option>
-                                <option>Essentials</option>
-                                <option>Streetwear</option>
+                            <select id="product-category" name="cate_id">
+                                <option value="" selected disabled>Select category</option>
+                                @foreach ($cate as $c)
+                                    <option value="{{ $c['id'] }}">{{ $c['cate_name'] }}</option>
+                                @endforeach
+                                
                             </select>
                         </div>
 

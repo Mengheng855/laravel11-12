@@ -87,11 +87,12 @@
                     </div>
                 </div>
 
-                <form class="admin-form" id="edit-category-form">
+                <form class="admin-form" id="edit-category-form" action="{{ url('/admin/category/'.$data['id'].'/updateCategory') }}" method="post" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-grid">
                         <div class="form-field">
                             <label for="cate-name">Category Name</label>
-                            <input id="cate-name" name="cate_name" type="text" value="Dresses">
+                            <input id="cate-name" name="cate_name" type="text" value="{{ $data['cate_name'] }}">
                         </div>
 
                         <div class="form-field">

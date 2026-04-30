@@ -87,11 +87,12 @@
                     </div>
                 </div>
 
-                <form class="admin-form" id="add-product-form">
+                <form action="{{ route('createProduct') }}" method="post" enctype="multipart/form-data" class="admin-form" id="add-product-form">
+                    @csrf
                     <div class="form-grid">
                         <div class="form-field full">
                             <label for="product-name">Product Name</label>
-                            <input id="product-name" name="name" type="text" placeholder="Enter product name">
+                            <input id="product-name" name="pro_name" type="text" placeholder="Enter product name">
                         </div>
 
                         <div class="form-field">
@@ -101,17 +102,17 @@
 
                         <div class="form-field">
                             <label for="product-qty">Qty</label>
-                            <input id="product-qty" name="qty" type="number" placeholder="Enter quantity">
+                            <input id="product-qty" name="stock" type="number" placeholder="Enter quantity">
                         </div>
 
                         <div class="form-field">
                             <label for="product-category">Category</label>
-                            <select id="product-category" name="category">
-                                <option value="">Select category</option>
-                                <option>Dresses</option>
-                                <option>Outerwear</option>
-                                <option>Essentials</option>
-                                <option>Streetwear</option>
+                            <select id="product-category" name="cate_id">
+                                <option value="" selected disabled>Select category</option>
+                                @foreach ($cate as $c)
+                                    <option value="{{ $c['id'] }}">{{ $c['cate_name'] }}</option>
+                                @endforeach
+                                
                             </select>
                         </div>
 
