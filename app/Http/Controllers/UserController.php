@@ -1,5 +1,8 @@
 <?php
 namespace App\Http\Controllers;
+
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -7,7 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function user(){
-        return view('user.index');
+        $cate=Category::all();
+        $pro=Product::with('category')->get();
+        return view('user.index',compact('cate','pro'));
     }
     public function register(){
         return view('auth.register');
@@ -43,6 +48,7 @@ class UserController extends Controller
         return view('admin.dashboard');
     }
     public function ManageUser(){
-        return view('admin.user');
+        $data=User::all();
+        return view('admin.user',compact('data'));
     }
 }

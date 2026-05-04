@@ -496,22 +496,14 @@
             </div>
 
             <div class="category-grid">
-                <a class="category-card" href="#new">
-                    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&q=85" alt="Woman shopping for new clothes">
-                    <span class="category-label">Dresses <span>&rarr;</span></span>
-                </a>
-                <a class="category-card" href="#new">
-                    <img src="https://images.unsplash.com/photo-1543076447-215ad9ba6923?auto=format&fit=crop&w=700&q=85" alt="Casual streetwear outfit">
-                    <span class="category-label">Streetwear <span>&rarr;</span></span>
-                </a>
-                <a class="category-card" href="#new">
-                    <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=700&q=85" alt="Minimal neutral outfit details">
-                    <span class="category-label">Essentials <span>&rarr;</span></span>
-                </a>
-                <a class="category-card" href="#new">
-                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=700&q=85" alt="Fashion model wearing outerwear">
-                    <span class="category-label">Outerwear <span>&rarr;</span></span>
-                </a>
+                @foreach ($cate as $c)
+                    
+                    <a class="category-card" href="#new">
+                        <img src="{{ $c['image'] }}" alt="Woman shopping for new clothes">
+                        <span class="category-label">{{ $c['cate_name'] }} <span>&rarr;</span></span>
+                    </a>
+                @endforeach
+               
             </div>
         </div>
     </section>
@@ -527,77 +519,33 @@
             </div>
 
             <div class="product-grid">
-                <article class="product-card">
-                    <div class="product-media">
-                        <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=760&q=85" alt="Linen wrap dress on model">
-                    </div>
-                    <div class="product-body">
-                        <div class="product-meta">
-                            <h3>Linen Wrap Dress</h3>
-                            <span class="price">$89</span>
+                @foreach ($pro as $p)
+                    
+                    <article class="product-card">
+                        <div class="product-media">
+                            <img src="{{ $p['image'] }}" alt="Linen wrap dress on model">
                         </div>
-                        <div class="product-data">
-                            <div><span>Available</span><strong>62 pcs</strong></div>
-                            <span class="product-category">Dresses</span>
+                        <div class="product-body">
+                            <div class="product-meta">
+                                <h3>{{ $p['pro_name'] }}</h3>
+                                <span class="price">${{ $p['price'] }}</span>
+                            </div>
+                            <div class="product-data">
+                                <div><span>Available</span><strong>{{ $p['stock'] }} pcs</strong></div>
+                                <span class="product-category">{{ $p->category->cate_name }}</span>
+                            </div>
+                            <div class="swatches" aria-label="Available colors">
+                                <span class="swatch-list">
+                                    <span class="swatch" style="background:#f0e6d2"></span>
+                                    <span class="swatch" style="background:#c46f48"></span>
+                                    <span class="swatch" style="background:#171512"></span>
+                                </span>
+                                <a class="shop-link" href="#">View</a>
+                            </div>
                         </div>
-                        <div class="swatches" aria-label="Available colors">
-                            <span class="swatch-list">
-                                <span class="swatch" style="background:#f0e6d2"></span>
-                                <span class="swatch" style="background:#c46f48"></span>
-                                <span class="swatch" style="background:#171512"></span>
-                            </span>
-                            <a class="shop-link" href="#">View</a>
-                        </div>
-                    </div>
-                </article>
+                    </article>
+                @endforeach
 
-                <article class="product-card">
-                    <div class="product-media">
-                        <img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=760&q=85" alt="Classic denim jacket">
-                    </div>
-                    <div class="product-body">
-                        <div class="product-meta">
-                            <h3>Denim Work Jacket</h3>
-                            <span class="price">$118</span>
-                        </div>
-                        <div class="product-data">
-                            <div><span>Available</span><strong>84 pcs</strong></div>
-                            <span class="product-category">Outerwear</span>
-                        </div>
-                        <div class="swatches" aria-label="Available colors">
-                            <span class="swatch-list">
-                                <span class="swatch" style="background:#41576f"></span>
-                                <span class="swatch" style="background:#e9e0cf"></span>
-                                <span class="swatch" style="background:#2f3d31"></span>
-                            </span>
-                            <a class="shop-link" href="#">View</a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="product-card">
-                    <div class="product-media">
-                        <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=760&q=85" alt="Tailored blouse outfit">
-                    </div>
-                    <div class="product-body">
-                        <div class="product-meta">
-                            <h3>Tailored Soft Blouse</h3>
-                            <span class="price">$64</span>
-                        </div>
-                        <div class="product-data">
-                            <div><span>Available</span><strong>21 pcs</strong></div>
-                            <span class="product-category">Essentials</span>
-                        </div>
-                        <div class="swatches" aria-label="Available colors">
-                            <span class="swatch-list">
-                                <span class="swatch" style="background:#ffffff"></span>
-                                <span class="swatch" style="background:#d6aa4f"></span>
-                                <span class="swatch" style="background:#73866a"></span>
-                            </span>
-                            <a class="shop-link" href="#">View</a>
-                        </div>
-                    </div>
-                </article>
             </div>
         </div>
     </section>

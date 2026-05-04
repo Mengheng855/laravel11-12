@@ -29,6 +29,7 @@ Route::prefix('/admin')->group(function(){
         Route::controller(UserController::class)->group(function(){
             Route::get('/dashboard','dashboard');
             Route::get('/user','ManageUser');
+            
         });
         Route::controller(ProductController::class)->group(function(){
             Route::get('/product','product');
